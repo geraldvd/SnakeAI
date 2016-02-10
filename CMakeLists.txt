@@ -60,7 +60,7 @@ endif(WITH_QT)
 #########################################################################
 ### OpenCV settings
 if(WITH_OPENCV)
-    find_package(OpenCV REQUIRED)
+    find_package(OpenCV 3 REQUIRED)
 endif(WITH_OPENCV)
 
 

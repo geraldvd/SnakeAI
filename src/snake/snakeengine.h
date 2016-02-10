@@ -18,18 +18,33 @@ class SnakeEngine
 {
 public:
     SnakeEngine(const unsigned &width=25, const unsigned &height=25, const unsigned &initialAgentLength=3);
+    int step(const Direction &action);
+    void reset();
+    void addBite();
 
 #ifdef WITH_OPENCV
     cv::Mat getBoard(const unsigned &pixelsPerPosition=20) const;
 #endif
 
+    unsigned getTimeStep() const;
+    bool isPaused() const;
+
 private:
     unsigned width;
     unsigned height;
     int score;
+    unsigned initialAgentLength;
+    unsigned timeStep;
+    bool gamePaused;
 
-    std::vector<Position> agent;
-    std::vector<Position> bites;
+    std::vector<BlockState> agent;
+    std::vector<BlockState> bites;
+
+    // constants
+    static const int SCORE_BITE;
+    static const int SCORE_DIRECTIONCHANGE;
+    static const int SCORE_WALL;
+    static const int SCORE_SELFHIT;
 };
 
 #endif // SNAKEENGINE_H

@@ -1,15 +1,15 @@
 #ifndef SNAKEUTILS_H
 #define SNAKEUTILS_H
 
-// Include standard libraries
-
-enum Actions {
-    FORWARD, BACKWARD, LEFT, RIGHT
+enum Direction {
+    NONE=0, UP=-1, DOWN=1, LEFT=-2, RIGHT=2
 };
 
-struct Position {
+struct BlockState {
     unsigned x;
     unsigned y;
+    Direction currentDirection;
+    bool isHead;
 };
 
 
