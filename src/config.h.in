@@ -1,2 +1,3 @@
 // This file contains the CMAKE configured #define's
 #cmakedefine WITH_QT
+#cmakedefine WITH_OPENCV

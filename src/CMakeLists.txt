@@ -24,6 +24,10 @@ endif(WITH_QT)
 # 3rd party libraries
 add_subdirectory(3rdparty)
 
+# Snake game
+add_subdirectory(snake)
+include_directories(snake)
+
 # Add gui
 if(WITH_QT)
     add_subdirectory(gui)
@@ -40,9 +44,16 @@ include_directories(${PROJECT_BINARY_DIR})
 ### Compilation settings
 add_executable(${PROJECT_NAME}
     main.cpp
+
+    # Snake Engine
+    snake/snakeengine.cpp
 )
 
 if(WITH_QT)
     target_link_libraries(${PROJECT_NAME} ${QT_LIBS})
     target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}_gui)
 endif(WITH_QT)
+
+if(WITH_OPENCV)
+    target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
+endif(WITH_OPENCV)

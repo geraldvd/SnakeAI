@@ -43,7 +43,8 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 #########################################################################
 ### Configuration options
-option(WITH_QT "Should the executable have the Qt libraries (and hence a GUI)?" ON)
+option(WITH_QT "Should the executable have the Qt libraries (and hence a GUI)?" OFF)
+option(WITH_OPENCV "Should the executable have the OpenCV libraries (alternative GUI and keyboard interaction)?" ON)
 option(WITH_TESTS "Should unittests be compiled?" OFF)
 
 #########################################################################
@@ -55,6 +56,12 @@ if(WITH_QT)
         set(BASE_DIR_QT5 "/opt/Qt/5.4/gcc_64" CACHE FILEPATH "The full path to the Qt 5 installation (Linux)")
     endif(APPLE)
 endif(WITH_QT)
+
+#########################################################################
+### OpenCV settings
+if(WITH_OPENCV)
+    find_package(OpenCV REQUIRED)
+endif(WITH_OPENCV)
 
 
 #########################################################################
