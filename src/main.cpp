@@ -21,11 +21,9 @@
 using namespace std;
 
 int main(int argc, char **argv) {
-    // Initialize game
-    SnakeEngine game(35,35,7);
-
 #ifdef WITH_OPENCV
     // Initialize
+    SnakeEngine game(35,35,7);
     cv::namedWindow("Snake");
     bool keepPlaying{true};
     unsigned timeStep = 100; // in [ms]; 0 means as fast as SnakeEngine::step() is called (e.g., for AI)
@@ -40,10 +38,8 @@ int main(int argc, char **argv) {
         // Display board
         imshow("Snake", game.getBoard());
 
-
         // Process keyboard input
         int keyPress = waitKey(timeStep) & 0xFF;
-        cout << "kjsljdf    " << rand()%50 << endl;
         switch(keyPress) {
         // To quit: press ESC
         case 27:

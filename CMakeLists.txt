@@ -3,7 +3,7 @@
 #
 # Author: Gerald van Dalen
 # Started project: 09/02/2016
-# Last edited: 09/02/2016
+# Last edited: 10/02/2016
 #########################################################################
 ### Basic setup cmake
 cmake_minimum_required(VERSION 2.8.11)
