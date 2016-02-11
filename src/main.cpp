@@ -40,7 +40,6 @@ int main(int argc, char **argv) {
 
         // Process keyboard input
         int keyPress = waitKey(timeStep) & 0xFF;
-        cout << keyPress << endl;
         switch(keyPress) {
         // To quit: press ESC
         case 27:

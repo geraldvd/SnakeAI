@@ -103,6 +103,28 @@ int SnakeEngine::step(const Direction &action)
 
             // Add bite to tail of snake
             // TODO: must be done after "length-of-agent"-steps
+            unsigned xi{this->agent.back().x};
+            unsigned yi{this->agent.back().y};
+            switch(this->agent.back().currentDirection) {
+            case UP:
+                yi++;
+                break;
+            case DOWN:
+                yi--;
+                break;
+            case LEFT:
+                xi++;
+                break;
+            case RIGHT:
+                xi--;
+                break;
+            default:
+                // Do nothing
+                break;
+            }
+            this->agent.push_back(BlockState{xi, yi,
+                                             this->agent.back().currentDirection,
+                                             false, static_cast<int>(this->agent.size())});
         }
     }
 
@@ -131,9 +153,9 @@ void SnakeEngine::reset()
     this->gamePaused = true;
 
     // Define middle of agent in middle of screen
-    this->agent.push_back(BlockState{width/2, height/2-((this->initialAgentLength-1)/2), UP, true});
+    this->agent.push_back(BlockState{width/2, height/2-((this->initialAgentLength-1)/2), UP, true, 0});
     for(unsigned i=1; i<this->initialAgentLength; i++) {
-        this->agent.push_back(BlockState{this->agent.back().x, this->agent.back().y+1, UP, false});
+        this->agent.push_back(BlockState{this->agent.back().x, this->agent.back().y+1, UP, false, 0});
     }
 
     // Add single bite
@@ -145,7 +167,7 @@ void SnakeEngine::addBite()
     // TODO: takes very long if many bites already exist!
 
     bool validBite{true};
-    BlockState newBite{0, 0, NONE, false};
+    BlockState newBite{0, 0, NONE, false, 0};
 
     do {
         // Generate random position
