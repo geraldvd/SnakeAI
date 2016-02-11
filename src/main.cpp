@@ -40,27 +40,48 @@ int main(int argc, char **argv) {
 
         // Process keyboard input
         int keyPress = waitKey(timeStep) & 0xFF;
+        cout << keyPress << endl;
         switch(keyPress) {
         // To quit: press ESC
         case 27:
             keepPlaying = false;
             break;
         // To reset: press RETURN
+#ifdef __APPLE__
+        case 13:
+#else
         case 10:
+#endif
             game.reset();
             nextAction = NONE;
             break;
         // Arrow keys
+#ifdef __APPLE__
+        case 0:
+#else
         case 82:
+#endif
             nextAction = UP;
             break;
+#ifdef __APPLE__
+        case 1:
+#else
         case 84:
+#endif
             nextAction = DOWN;
             break;
+#ifdef __APPLE__
+        case 2:
+#else
         case 81:
+#endif
             nextAction = LEFT;
             break;
+#ifdef __APPLE__
+        case 3:
+#else
         case 83:
+#endif
             nextAction = RIGHT;
             break;
         }
