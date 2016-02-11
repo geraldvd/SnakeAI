@@ -23,10 +23,10 @@ using namespace std;
 int main(int argc, char **argv) {
 #ifdef WITH_OPENCV
     // Initialize
-    SnakeEngine game(35,35,7);
+    SnakeEngine game(35, 35, 3);
     cv::namedWindow("Snake");
     bool keepPlaying{true};
-    unsigned timeStep = 100; // in [ms]; 0 means as fast as SnakeEngine::step() is called (e.g., for AI)
+    unsigned timeStep = 0; // in [ms]; 0 means as fast as SnakeEngine::step() is called (e.g., for AI)
     Direction nextAction{NONE};
 
     // Main game loop

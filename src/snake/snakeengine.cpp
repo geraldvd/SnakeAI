@@ -25,7 +25,9 @@ SnakeEngine::SnakeEngine(const unsigned & width, const unsigned & height, const 
     timeStep(0),
     gamePaused(true)
 {
+    // Snake may not be longer than screen height
     assert(this->initialAgentLength < this->height);
+
     this->reset();
 }
 
@@ -94,6 +96,44 @@ int SnakeEngine::step(const Direction &action)
         }
     }
 
+    // Deal with delayed tail additions
+    unsigned popCount{0};
+    for(auto &i : this->agentAddTailDelay) {
+        if(i) {
+            i--;
+        } else {
+            popCount++;
+        }
+    }
+    while(popCount-- > 0) {
+        // Pop from vector
+        this->agentAddTailDelay.erase(this->agentAddTailDelay.begin());
+
+        // Add to tail
+        unsigned xi{this->agent.back().x};
+        unsigned yi{this->agent.back().y};
+        switch(this->agent.back().currentDirection) {
+        case UP:
+            yi++;
+            break;
+        case DOWN:
+            yi--;
+            break;
+        case LEFT:
+            xi++;
+            break;
+        case RIGHT:
+            xi--;
+            break;
+        default:
+            // Do nothing
+            break;
+        }
+        this->agent.push_back(BlockState{xi, yi, this->agent.back().currentDirection,false});
+    }
+
+
+
     // Check whether bite is eaten
     for(vector<BlockState>::iterator bi = this->bites.begin(); bi != this->bites.end(); bi++) {
         if(head.x == (*bi).x && head.y == (*bi).y) {
@@ -101,35 +141,13 @@ int SnakeEngine::step(const Direction &action)
             this->score += SnakeEngine::SCORE_BITE;
             this->addBite();
 
-            // Add bite to tail of snake
-            // TODO: must be done after "length-of-agent"-steps
-            unsigned xi{this->agent.back().x};
-            unsigned yi{this->agent.back().y};
-            switch(this->agent.back().currentDirection) {
-            case UP:
-                yi++;
-                break;
-            case DOWN:
-                yi--;
-                break;
-            case LEFT:
-                xi++;
-                break;
-            case RIGHT:
-                xi--;
-                break;
-            default:
-                // Do nothing
-                break;
-            }
-            this->agent.push_back(BlockState{xi, yi,
-                                             this->agent.back().currentDirection,
-                                             false, static_cast<int>(this->agent.size())});
+            // Add bite to tail of snake (with delay)
+            this->agentAddTailDelay.push_back(static_cast<unsigned>(this->agent.size())-1);
         }
     }
 
     // Evaluate position validity (only needed for head)
-    if(head.x < 0 || head.x >= this->width || head.y < 0 || head.y >= this->height) {
+    if(/* head.x < 0 ||*/ head.x >= this->width || /*head.y < 0 ||*/ head.y >= this->height) {
         // Hit a wall!
         this->score += SnakeEngine::SCORE_WALL;
         int oldScore = this->score;
@@ -153,9 +171,9 @@ void SnakeEngine::reset()
     this->gamePaused = true;
 
     // Define middle of agent in middle of screen
-    this->agent.push_back(BlockState{width/2, height/2-((this->initialAgentLength-1)/2), UP, true, 0});
+    this->agent.push_back(BlockState{width/2, height/2-((this->initialAgentLength-1)/2), UP, true});
     for(unsigned i=1; i<this->initialAgentLength; i++) {
-        this->agent.push_back(BlockState{this->agent.back().x, this->agent.back().y+1, UP, false, 0});
+        this->agent.push_back(BlockState{this->agent.back().x, this->agent.back().y+1, UP, false});
     }
 
     // Add single bite
@@ -167,7 +185,7 @@ void SnakeEngine::addBite()
     // TODO: takes very long if many bites already exist!
 
     bool validBite{true};
-    BlockState newBite{0, 0, NONE, false, 0};
+    BlockState newBite{0, 0, NONE, false};
 
     do {
         // Generate random position
@@ -204,6 +222,7 @@ void SnakeEngine::addBite()
 #ifdef WITH_OPENCV
 cv::Mat SnakeEngine::getBoard(const unsigned & pixelsPerPosition) const
 {
+    // Initialize board; Note: colors in [0.0...1.0]; Status area of 50 pixels high
     Mat board = Mat(pixelsPerPosition*this->height + 50, pixelsPerPosition*this->width, CV_64FC4);
     board = Scalar(0.8, 0.8, 0.8);
 
@@ -229,6 +248,7 @@ cv::Mat SnakeEngine::getBoard(const unsigned & pixelsPerPosition) const
 
     return board;
 }
+#endif
 
 unsigned SnakeEngine::getTimeStep() const
 {
@@ -239,4 +259,3 @@ bool SnakeEngine::isPaused() const
 {
     return this->gamePaused;
 }
-#endif
