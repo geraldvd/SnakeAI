@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
     SnakeEngine game(35, 35, 3);
     cv::namedWindow("Snake");
     bool keepPlaying{true};
-    unsigned timeStep = 0; // in [ms]; 0 means as fast as SnakeEngine::step() is called (e.g., for AI)
+    unsigned timeStep = 100; // in [ms]; 0 means as fast as SnakeEngine::step() is called (e.g., for AI)
     Direction nextAction{NONE};
 
     // Main game loop

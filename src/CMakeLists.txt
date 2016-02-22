@@ -28,6 +28,10 @@ add_subdirectory(3rdparty)
 add_subdirectory(snake)
 include_directories(snake)
 
+# RL - Q-learning
+add_subdirectory(RL)
+include_directories(RL)
+
 # Add gui
 if(WITH_QT)
     add_subdirectory(gui)
@@ -47,6 +51,9 @@ add_executable(${PROJECT_NAME}
 
     # Snake Engine
     snake/snakeengine.cpp
+
+    # Reinforcement Learning
+    RL/qlearning.cpp
 )
 
 if(WITH_QT)
