@@ -1,11 +1,12 @@
 #ifndef SNAKEACTIONS_H
 #define SNAKEACTIONS_H
 
+// Include project files
+#include "action.h"
 
-class SnakeActions
-{
+class ActionUp : public Action {
 public:
-    SnakeActions();
-};
+    virtual double perform();
+}
 
 #endif // SNAKEACTIONS_H

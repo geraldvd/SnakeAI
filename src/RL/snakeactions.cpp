@@ -5,3 +5,9 @@ SnakeActions::SnakeActions()
 
 }
 
+
+
+double ActionUp::perform()
+{
+
+}

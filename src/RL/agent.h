@@ -4,17 +4,24 @@
 // Include standard libraries
 #include <vector>
 
+// Include project libraries
+#include "action.h"
+#include "environment.h"
+
 class Agent
 {
 public:
-    Agent();
+    Agent(const std::vector<double> &initialState, Environment *e);
 
     // Agent specific method; returns reward.
-    virtual double performAction() = 0;
+    double performAction(Action *a);
 
 private:
     // Vector of double's represents state
     std::vector<double> state;
+
+    // Pointer to environment
+    Environment *environment;
 
 };
 

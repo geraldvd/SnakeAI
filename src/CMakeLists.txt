@@ -54,7 +54,6 @@ add_executable(${PROJECT_NAME}
 
     # Reinforcement Learning
     RL/agent.cpp
-    RL/snakeagent.cpp
     RL/environment.cpp
     RL/action.cpp
     RL/snakeactions.cpp

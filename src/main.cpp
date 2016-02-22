@@ -16,11 +16,24 @@
 
 // Include project files
 #include "snakeengine.h"
+#ifdef USE_RL
+    #include "agent.h"
+    #include "environment.h"
+#endif
 
 // Namespaces
 using namespace std;
 
 int main(int argc, char **argv) {
+#ifdef USE_RL
+    // Start the game
+    SnakeEngine game(35, 35, 3);
+
+    // Define RL environment, agent and actions
+    Agent agent();
+
+
+#else
 #ifdef WITH_OPENCV
     // Initialize
     SnakeEngine game(35, 35, 3);
@@ -85,7 +98,8 @@ int main(int argc, char **argv) {
             break;
         }
     }
-#endif
+#endif // WITH_OPENCV
+#endif // USE_RL
 
 
     return 0;
