@@ -11,7 +11,6 @@
 #ifdef WITH_OPENCV
     #include <opencv2/core/core.hpp>
     #include <opencv2/highgui/highgui.hpp>
-    #include <opencv2/core/utility.hpp>
     using namespace cv;
 #endif
 
