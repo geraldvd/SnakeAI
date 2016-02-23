@@ -259,3 +259,43 @@ bool SnakeEngine::isPaused() const
 {
     return this->gamePaused;
 }
+
+std::vector<BlockState> SnakeEngine::getAgent() const
+{
+    return this->agent;
+}
+
+std::vector<BlockState> SnakeEngine::getBites() const
+{
+    return this->bites;
+}
+
+std::vector<std::vector<unsigned> > SnakeEngine::getStateTable()
+{
+    vector<vector<unsigned> > stateTable(this->width, vector<unsigned>(this->height, 0));
+
+    // Add agent
+    for(BlockState &b : this->agent) {
+        stateTable.at(b.x).at(b.y) = 1;
+    }
+
+    // Add bites
+    for(BlockState &b : this->bites) {
+        stateTable.at(b.x).at(b.y) = 2;
+    }
+
+    return stateTable;
+}
+
+std::vector<double> SnakeEngine::getStateVector()
+{
+    vector<double> stateVector;
+
+    for(auto &column : this->getStateTable()) {
+        for(auto &s : column) {
+            stateVector.push_back(static_cast<double>(s));
+        }
+    }
+
+    return stateVector;
+}

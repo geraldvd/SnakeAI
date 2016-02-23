@@ -38,6 +38,10 @@ public:
 
     unsigned getTimeStep() const;
     bool isPaused() const;
+    std::vector<BlockState> getAgent() const;
+    std::vector<BlockState> getBites() const;
+    std::vector<std::vector<unsigned> > getStateTable();
+    std::vector<double> getStateVector();
 
 private:
     unsigned width;

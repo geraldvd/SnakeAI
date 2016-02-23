@@ -2,6 +2,7 @@
 
 // Include standard libraries
 #include <iostream>
+#include <vector>
 
 #ifdef WITH_QT
     #include <QApplication>
@@ -18,7 +19,7 @@
 #include "snakeengine.h"
 #ifdef USE_RL
     #include "agent.h"
-    #include "environment.h"
+    #include "snakeactions.h"
 #endif
 
 // Namespaces
@@ -27,11 +28,47 @@ using namespace std;
 int main(int argc, char **argv) {
 #ifdef USE_RL
     // Start the game
-    SnakeEngine game(35, 35, 3);
+    SnakeEngine game(10, 10, 3);
 
-    // Define RL environment, agent and actions
-    Agent agent();
+    // Define RL Actions
+    vector<Action*> actions;
+    actions.push_back(new ActionUp(&game));
+    actions.push_back(new ActionDown(&game));
+    actions.push_back(new ActionLeft(&game));
+    actions.push_back(new ActionRight(&game));
 
+    // Define RL Agent
+    Agent agent(game.getStateVector(), actions);
+
+    // Initialize main loop
+    cv::namedWindow("Snake");
+    bool keepPlaying{true};
+    unsigned timeStep = 100; // in [ms]; 0 means as fast as SnakeEngine::step() is called (e.g., for AI)
+
+    // Main loop
+    while(keepPlaying) {
+        // RL performs action
+        agent.nonGreedyAction();
+
+        // Display board
+        imshow("Snake", game.getBoard());
+
+        // Process keyboard input
+        int keyPress = waitKey(timeStep) & 0xFF;
+        switch(keyPress) {
+            // To quit: press ESC
+            case 27:
+                keepPlaying = false;
+                break;
+        }
+    }
+
+
+
+    // End of program - delete pointers
+    for(Action* a : actions) {
+        delete a;
+    }
 
 #else
 #ifdef WITH_OPENCV

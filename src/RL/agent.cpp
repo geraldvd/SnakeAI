@@ -1,14 +1,29 @@
 #include "agent.h"
 
-Agent::Agent(const std::vector<double> & initialState, Environment * e) :
-    state(initialState),
-    environment(e)
+Agent::Agent(const std::vector<double> & initialState, std::vector<Action *> actions) :
+    actions(actions),
+    state(initialState)
 {
 
 }
 
-double Agent::performAction(Action * a)
+void Agent::nonGreedyAction()
 {
-    double R = a->perform();
+    // Pick random action
+    unsigned actionIndex = rand() % this->actions.size();
+
+    // Perform action
+    this->performAction(this->actions.at(actionIndex));
+}
+
+void Agent::performAction(Action * a)
+{
+    std::pair<double,std::vector<double> > actionReturn = a->perform();
+
+    // Set new state
+    this->state = actionReturn.second;
+
+    // Set new reward
+    this->lastReward = actionReturn.first;
 }
 
