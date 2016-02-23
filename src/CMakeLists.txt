@@ -46,23 +46,44 @@ include_directories(${PROJECT_BINARY_DIR})
 
 #########################################################################
 ### Compilation settings
-add_executable(${PROJECT_NAME}
+# Normal snake game
+add_executable(Snake
     main.cpp
 
     # Snake Engine
     snake/snakeengine.cpp
-
-    # Reinforcement Learning
-    RL/agent.cpp
-    RL/action.cpp
-    RL/snakeactions.cpp
 )
 
 if(WITH_QT)
-    target_link_libraries(${PROJECT_NAME} ${QT_LIBS})
-    target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}_gui)
+    target_link_libraries(Snake ${QT_LIBS})
+    target_link_libraries(Snake ${PROJECT_NAME}_gui)
 endif(WITH_QT)
 
 if(WITH_OPENCV)
-    target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
+    target_link_libraries(Snake ${OpenCV_LIBS})
 endif(WITH_OPENCV)
+
+# RL engine
+if(WITH_RL)
+    add_executable(SnakeRL
+        RL/main.cpp
+
+        # Snake Engine
+        snake/snakeengine.cpp
+
+        # Reinforcement Learning
+        RL/agent.cpp
+        RL/action.cpp
+        RL/snakeactions.cpp
+    )
+
+    if(WITH_QT)
+        target_link_libraries(SnakeRL ${QT_LIBS})
+        target_link_libraries(SnakeRL ${PROJECT_NAME}_gui)
+    endif(WITH_QT)
+
+    if(WITH_OPENCV)
+        target_link_libraries(SnakeRL ${OpenCV_LIBS})
+    endif(WITH_OPENCV)
+endif(WITH_RL)
+

@@ -2,4 +2,4 @@
 #cmakedefine WITH_QT
 #cmakedefine WITH_OPENCV
 
-#cmakedefine USE_RL
+#cmakedefine WITH_RL

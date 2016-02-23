@@ -6,6 +6,7 @@
 
 // Include standard libraries
 #include <vector>
+#include <cmath>
 
 #ifdef WITH_OPENCV
     // Include OpenCV libraries
@@ -42,6 +43,7 @@ public:
     std::vector<BlockState> getBites() const;
     std::vector<std::vector<unsigned> > getStateTable();
     std::vector<double> getStateVector();
+    double getNumberOfStates() const;
 
 private:
     unsigned width;

@@ -299,3 +299,9 @@ std::vector<double> SnakeEngine::getStateVector()
 
     return stateVector;
 }
+
+double SnakeEngine::getNumberOfStates() const
+{
+    // Number of possibilities: 3 options per field; hence: 3^numFields
+    return pow(3,this->width * this->height);
+}

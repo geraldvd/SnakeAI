@@ -14,12 +14,17 @@ class Agent
 public:
     Agent(const std::vector<double> &initialState, std::vector<Action*> actions);
 
-    // Policy's
-    void nonGreedyAction();
+    // Agent specific method; choose and perform action
+    void performAction();
+
+    // Getters
+    std::vector<double> getState() const;
+    std::vector<std::vector<double> > getKnownStates() const;
+    std::vector<Action*> getActions();
 
 private:
-    // Agent specific method; returns reward.
-    void performAction(Action *a);
+    // Add state to knownStates and QTable; returns false if already in there.
+    bool addState(const std::vector<double> &s);
 
 private:
     // List of possible actions
@@ -28,9 +33,14 @@ private:
     // Vector of double's represents state
     std::vector<double> state;
 
+    // List of possible (known) states
+    std::vector<std::vector<double> > knownStates;
+
     // Last reward
     double lastReward;
 
+    // State-Action values for Q-Learning
+    std::vector<std::pair<unsigned,unsigned> > QTable;
 };
 
 #endif // AGENT_H

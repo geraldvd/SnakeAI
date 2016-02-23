@@ -47,7 +47,7 @@ option(WITH_QT "Should the executable have the Qt libraries (and hence a GUI)?" 
 option(WITH_OPENCV "Should the executable have the OpenCV libraries (alternative GUI and keyboard interaction)?" ON)
 option(WITH_TESTS "Should unittests be compiled?" OFF)
 
-option(USE_RL "Should RL be used to play the game? Note: OFF means that a human user plays." ON)
+option(WITH_RL "Should RL be used to play the game (i.e., extra executable)?" ON)
 
 #########################################################################
 ### Qt 5 settings
