@@ -5,6 +5,7 @@
 #include <vector>
 #include <utility>
 #include <cstdlib>
+#include <map>
 
 // Include project libraries
 #include "action.h"
@@ -12,15 +13,15 @@
 class Agent
 {
 public:
-    Agent(const std::vector<double> &initialState, std::vector<Action*> actions);
+    Agent(const std::vector<double> &initialState, std::vector<Action*> actions, float epsilon=0.9);
 
     // Agent specific method; choose and perform action
     void performAction();
 
     // Getters
     std::vector<double> getState() const;
-    std::vector<std::vector<double> > getKnownStates() const;
     std::vector<Action*> getActions();
+    std::map<std::vector<double>,std::vector<double> > getQTable() const;
 
 private:
     // Add state to knownStates and QTable; returns false if already in there.
@@ -33,14 +34,14 @@ private:
     // Vector of double's represents state
     std::vector<double> state;
 
-    // List of possible (known) states
-    std::vector<std::vector<double> > knownStates;
-
     // Last reward
     double lastReward;
 
     // State-Action values for Q-Learning
-    std::vector<std::pair<unsigned,unsigned> > QTable;
+    std::map<std::vector<double>,std::vector<double> > QTable;
+
+    // Exploration factor
+    float epsilon;
 };
 
 #endif // AGENT_H

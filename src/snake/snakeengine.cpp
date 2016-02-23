@@ -276,6 +276,8 @@ std::vector<std::vector<unsigned> > SnakeEngine::getStateTable()
 
     // Add agent
     for(BlockState &b : this->agent) {
+        if(b.x >= this->width || b.y >= this->height)
+            continue;
         stateTable.at(b.x).at(b.y) = 1;
     }
 

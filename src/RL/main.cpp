@@ -40,25 +40,25 @@ int main(int argc, char **argv) {
     Agent agent(game.getStateVector(), actions);
 
     // Fast training loop
-    unsigned maxLoops = 10000;
+    unsigned maxLoops = 0;
     while(maxLoops--) {
         // RL performs action
         agent.performAction();
     }
 
-    cout << "States explored: " << agent.getKnownStates().size() << " of " << game.getNumberOfStates() << endl;
+    cout << "States explored: " << agent.getQTable().size() << " of " << game.getNumberOfStates() << endl;
 
     // Visualized loop
     cv::namedWindow("Snake");
     bool keepPlaying{true};
-    unsigned timeStep = 100; // in [ms]; 0 means as fast as SnakeEngine::step() is called (e.g., for AI)
+    unsigned timeStep = 10; // in [ms]; 0 means as fast as SnakeEngine::step() is called (e.g., for AI)
 
     while(keepPlaying) {
         // RL performs action
         agent.performAction();
 
         // Print explored states
-        cout << "States explored: " << agent.getKnownStates().size() << " of " << game.getNumberOfStates() << endl;
+        cout << "States explored: " << agent.getQTable().size() << " of " << game.getNumberOfStates() << endl;
 
         // Display board
         imshow("Snake", game.getBoard());
