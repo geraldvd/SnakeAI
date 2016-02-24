@@ -75,6 +75,7 @@ if(WITH_RL)
         RL/agent.cpp
         RL/action.cpp
         RL/snakeactions.cpp
+        RL/learningmethod.cpp
     )
 
     if(WITH_QT)
